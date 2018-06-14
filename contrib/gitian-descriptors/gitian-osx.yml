@@ -23,7 +23,7 @@ packages:
 - "python"
 reference_datetime: "2017-01-01 00:00:00"
 remotes:
-- "url": "https://github.com/stonecrypto/stonecoin.git"
+- "url": "https://github.com/tomevoll/stonecoin.git"
   "dir": "stonecoin"
 files:
 - "MacOSX10.9.sdk.tar.gz"
@@ -74,8 +74,8 @@ script: |
   cd stonecoin
   BASEPREFIX=`pwd`/depends
 
-  mkdir -p ${BASEPREFIX}/SDKs
-  tar -C ${BASEPREFIX}/SDKs -xf ${BUILD_DIR}/MacOSX10.9.sdk.tar.gz
+  mkdir -p ${BASEPREFIX}/SDKs/MacOSX10.9.sdk
+  tar -C ${BASEPREFIX}/SDKs/MacOSX10.9.sdk -xf ${BUILD_DIR}/MacOSX10.9.sdk.tar.gz
 
   # Build dependencies for each host
   for i in $HOSTS; do
@@ -106,7 +106,7 @@ script: |
     mkdir -p ${INSTALLPATH}
     tar --strip-components=1 -xf ../$SOURCEDIST
 
-    CONFIG_SITE=${BASEPREFIX}/${i}/share/config.site ./configure --prefix=/ --disable-ccache --disable-maintainer-mode --disable-dependency-tracking ${CONFIGFLAGS}
+    CONFIG_SITE=${BASEPREFIX}/${i}/share/config.site ./configure --prefix=/ --disable-ccache --disable-maintainer-mode --disable-dependency-tracking ${CONFIGFLAGS} --disable-tests
     make ${MAKEOPTS}
     make install-strip DESTDIR=${INSTALLPATH}
 

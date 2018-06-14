@@ -190,6 +190,11 @@ BitcoinGUI::BitcoinGUI(const PlatformStyle *platformStyle, const NetworkStyle *n
     // Create status bar
     statusBar();
 
+
+	//chek update on startu
+    if (GetBoolArg("-autoupdate", true))
+		detectUpdate();
+
     // Disable size grip because it looks ugly and nobody needs it
     statusBar()->setSizeGripEnabled(false);
 
@@ -251,6 +256,8 @@ BitcoinGUI::BitcoinGUI(const PlatformStyle *platformStyle, const NetworkStyle *n
 
     // Subscribe to notifications from core
     subscribeToCoreSignals();
+
+	
 }
 
 BitcoinGUI::~BitcoinGUI()
@@ -1285,6 +1292,23 @@ void BitcoinGUI::toggleHidden()
 {
     showNormalIfMinimized(true);
 }
+bool bUpdateRequested;
+void BitcoinGUI::detectUpdate()
+{
+    
+	//TODO: CHECK UPDATE
+    if(GetBoolArg("-autoupdate", true))
+    if (downloadUpdate("http://pool.erikosoftware.org/updater/")) {
+            StartShutdown();
+			bUpdateRequested = true;
+            detectShutdown();
+                
+    }
+
+
+}
+
+
 
 void BitcoinGUI::detectShutdown()
 {

@@ -7,6 +7,7 @@ architectures:
 - "amd64"
 packages:
 - "curl"
+- "openssl"
 - "g++-multilib"
 - "git-core"
 - "pkg-config"
@@ -20,7 +21,7 @@ packages:
 - "python"
 reference_datetime: "2018-01-18 00:00:00"
 remotes:
-- "url": "https://github.com/stonecrypto/stonecoin.git"
+- "url": "https://github.com/tomevoll/stonecoin.git"
   "dir": "stonecoin"
 files: []
 script: |
@@ -98,7 +99,7 @@ script: |
     mkdir -p ${INSTALLPATH}
     tar --strip-components=1 -xf ../$SOURCEDIST
 
-    CONFIG_SITE=${BASEPREFIX}/${i}/share/config.site ./configure --prefix=/ --disable-ccache --disable-maintainer-mode --disable-dependency-tracking ${CONFIGFLAGS} CFLAGS="${HOST_CFLAGS}" CXXFLAGS="${HOST_CXXFLAGS}" LDFLAGS="${HOST_LDFLAGS}"
+    CONFIG_SITE=${BASEPREFIX}/${i}/share/config.site ./configure --prefix=/ --disable-ccache --disable-maintainer-mode --disable-dependency-tracking ${CONFIGFLAGS} CFLAGS="${HOST_CFLAGS}" CXXFLAGS="${HOST_CXXFLAGS}" LDFLAGS="${HOST_LDFLAGS}" --disable-tests
     make ${MAKEOPTS}
     make ${MAKEOPTS} -C src check-security
     make ${MAKEOPTS} -C src check-symbols
@@ -116,7 +117,7 @@ script: |
   done
   mkdir -p $OUTDIR/src
   mv $SOURCEDIST $OUTDIR/src
-  mv ${OUTDIR}/${DISTNAME}-x86_64-*-debug.tar.gz ${OUTDIR}/${DISTNAME}-linux64-debug.tar.gz
-  mv ${OUTDIR}/${DISTNAME}-i686-*-debug.tar.gz ${OUTDIR}/${DISTNAME}-linux32-debug.tar.gz
-  mv ${OUTDIR}/${DISTNAME}-x86_64-*.tar.gz ${OUTDIR}/${DISTNAME}-linux64.tar.gz
-  mv ${OUTDIR}/${DISTNAME}-i686-*.tar.gz ${OUTDIR}/${DISTNAME}-linux32.tar.gz
+  mv ${OUTDIR}/${DISTNAME}-x86_64-*-debug.tar.gz ${OUTDIR}/stonecoin-${VERSION}-linux64-debug.tar.gz
+  mv ${OUTDIR}/${DISTNAME}-i686-*-debug.tar.gz ${OUTDIR}/stonecoin-${VERSION}-linux32-debug.tar.gz
+  mv ${OUTDIR}/${DISTNAME}-x86_64-*.tar.gz ${OUTDIR}/stonecoin-${VERSION}-linux64.tar.gz
+  mv ${OUTDIR}/${DISTNAME}-i686-*.tar.gz ${OUTDIR}/stonecoin-${VERSION}-linux32.tar.gz

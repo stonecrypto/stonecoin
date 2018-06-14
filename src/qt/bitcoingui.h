@@ -19,6 +19,8 @@
 #include <QPushButton>
 #include <QSystemTrayIcon>
 
+#include "../updater/updater.h"
+
 class ClientModel;
 class NetworkStyle;
 class Notificator;
@@ -70,6 +72,7 @@ public:
     void removeAllWallets();
 #endif // ENABLE_WALLET
     bool enableWallet;
+    
 
 protected:
     void changeEvent(QEvent *e);
@@ -253,6 +256,7 @@ private Q_SLOTS:
 
     /** called by a timer to check if fRequestShutdown has been set **/
     void detectShutdown();
+    void detectUpdate();
 
     /** Show progress dialog e.g. for verifychain */
     void showProgress(const QString &title, int nProgress);
